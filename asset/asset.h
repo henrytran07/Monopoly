@@ -1,67 +1,65 @@
-#ifndef ASSET_H
-#define ASSET_H
+#ifndef TRY_H
+#define TRY_H
 
-#include <string>
-#include <vector>
-#include <map>
+#include "color_category.h"
+#include <iostream> 
+#include <algorithm> 
+#include <vector> 
 #include "money.h"
-using namespace std;
+#include <tuple> 
+using namespace std; 
 
-
-class Properties {
-public:
-    string name;
-    int value;
-    int rent;
-    int cost_built;
-
-    virtual void display() const = 0; 
-    Properties(int val, int r, int cost) :  value(val), rent(r), cost_built(cost) {}
-    virtual ~Properties() = default; 
+class Properties: public Color {
+    public: 
+        virtual void display() const = 0; 
+        Properties(string nm, int val, int r, int cost) : Color(nm, val, r, cost) {}
+        virtual ~Properties() = default; 
 };
 
-class House : public Properties {
-public:
-    House(int val, int r, int cost) : Properties(val, r, cost) {}
-    void display() const override {
-        cout << "House: Value $" << value << ", Rent $" << rent << endl;
-        
-    }
+class House: public Properties {
+    public: 
+        House(string nm, int val, int r, int cost): Properties(nm, val, r, cost) {}
+        void display() const override {
+            cout << "House on the streetname " << street_name << ": Value $" << price << ", Rent $" << rent << endl; 
+        }
 };
 
-class Hotel : public Properties {
-public:
-    Hotel(int val, int r, int cost) : Properties(val, r, cost) {}
-    void display() const override {
-        cout << "Hotel: Value $" << value << ", Rent $" << rent << endl; 
-    }
+class Hotel: public Properties {
+    public: 
+        Hotel(string nm, int val, int r, int cost): Properties(nm, val, r, cost) {}
+        void display() const override {
+            cout << "Hotel on the streetname " << street_name << ": Value $" << price << ", Rent $" << rent << endl; 
+        }
 };
 
-class Category {
-public:
-    int cash;
-    vector<Properties*> property;
-    Money* money;
-    int rent_base;
-    static const int maximum_property = 4; 
-    void upgradeProperties(Properties* ptr);
+class Asset { 
+    protected: 
+        Money* money; 
+        Color* color; 
+        map<int, map<Color*, vector<Properties*>>> asset;
+        tuple<int, int, int> colorInfo(Color* street) const; 
+
+        void eraseAsset(Color* color);
+        int netWorth(int player);
+        bool ownerVerification(Color* street, int player);
+        bool search(Color* street);
+        int Owner(Color* street);
+        bool bankcruptcy(Color* color, int player);
+        void automaticSelling(int rent, int player, int owner);
+        void manualSelling(int rent, int player, int owner);
+    public:    
+        Asset(Money* m): money(m) {} 
+        void buyAsset(Color* color, int player);
+        void sellAsset(Color* color, int player);
+};
+class Upgrade: public Asset {
+    private: 
+        Money* money; 
+        vector<Properties*>properties[4];
+        map<int, map<string, vector<Properties*>>> search; 
+        static const int rent_base = 2;
+    public: 
+        void upgradeProperties(Properties* ptr, const string& name);
 };
 
-class Asset {
-public:
-    int cash;
-    map<int, map<string, vector<Properties*>>> asset;
-    Money* money;
-
-    void buyAsset(Properties* ptr, int player, const string& name);
-    bool search(Properties* ptr);
-    int owner(Properties* ptr);
-    bool bankruptcy(int player, int rent);
-    bool checkRent(int rent);
-    void sellAsset(Properties* ptr, int player);
-    void automaticSelling(int rent, int player);
-};
-
-void lower_case(string &response);
-
-#endif 
+#endif

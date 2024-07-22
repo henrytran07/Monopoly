@@ -3,17 +3,22 @@
 
 #include <map> 
 #include <iostream> 
-#include <vector> 
+#include <vector>  
 using namespace std; 
 
 class Color {
-    public: 
+    protected: 
         string street_name; 
         int price, rent; 
         int cost_built; 
 
+    public: 
         Color(string name, int p, int r, int cost): street_name(name), price(p), rent(r), cost_built(cost) {}
-   
+        
+        tuple<int, int, int> color() const {
+            return make_tuple(price, rent, cost_built);
+        }
+        
         static vector<Color*> BROWN() {
             vector<Color*> colors; 
             colors.push_back(new Color("Mediterranean Avenue", 2000, 2, 50));
@@ -75,6 +80,8 @@ class Color {
             colors.push_back(new Color("Boardwalk", 10000, 60, 200));
             return colors;
         }
+        map<vector<Color*>, map<string, tuple<int, int, int>>> Map(); 
+        tuple<int, int, int> color_information(map<vector<Color*>, map<string, tuple<int, int, int>>> myMap, const string& street_name);
 };
 
 #endif 
