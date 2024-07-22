@@ -16,6 +16,6 @@ This repository contains a C++ program for Monopoly Game
 - This will downlaod the repository to your local machine. 
 
 3. **Debugging file**
-   - Access the file named debugging.cpp.
+   - Access the file named debugging.cpp in asset folder. 
     - Open it in your preferred code editor or IDE.
     - Test the code by running the file and observing the output to identify and fix any issues.
