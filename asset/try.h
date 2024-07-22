@@ -1,5 +1,5 @@
-#ifndef ASSET_H
-#define ASSET_H
+#ifndef TRY_H
+#define TRY_H
 
 #include "color_category.h"
 #include <iostream> 
@@ -47,8 +47,10 @@ class Asset {
         bool bankcruptcy(Color* color, int player);
         void automaticSelling(int rent, int player, int owner);
         void manualSelling(int rent, int player, int owner);
-    public:    
+    public:  
+        map<int, map<Color*, vector<Properties*>>> getAsset() const {return asset;}
         Asset(Money* m): money(m) {} 
+        void printAsset() const;
         void buyAsset(Color* color, int player);
         void sellAsset(Color* color, int player);
 };

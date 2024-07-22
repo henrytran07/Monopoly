@@ -9,16 +9,18 @@ using namespace std;
 class Color {
     protected: 
         string street_name; 
-        int price, rent; 
-        int cost_built; 
+        int price, rent, cost_built; 
+        tuple<int, int, int> color() const {
+            return make_tuple(price, rent, cost_built);
+        }
 
     public: 
         Color(string name, int p, int r, int cost): street_name(name), price(p), rent(r), cost_built(cost) {}
         
-        tuple<int, int, int> color() const {
-            return make_tuple(price, rent, cost_built);
-        }
-        
+        string getStreetName() const {return street_name;}
+        int getPrice() const {return price;}
+        int getRent() const {return rent;}
+        int getCostBuilt() const {return cost_built;}
         static vector<Color*> BROWN() {
             vector<Color*> colors; 
             colors.push_back(new Color("Mediterranean Avenue", 2000, 2, 50));
@@ -80,6 +82,7 @@ class Color {
             colors.push_back(new Color("Boardwalk", 10000, 60, 200));
             return colors;
         }
+     
         map<vector<Color*>, map<string, tuple<int, int, int>>> Map(); 
         tuple<int, int, int> color_information(map<vector<Color*>, map<string, tuple<int, int, int>>> myMap, const string& street_name);
 };
