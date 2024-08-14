@@ -1,19 +1,8 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <iomanip> // For std::setw
-using namespace std;
 
-struct UserBoard {
-    static const int COL = 10; 
-    static const int ROW = 10; 
-    void board_at_0_i_inputFile(vector<string>& board_at_0_i);
-    void board_at_i_9_inputFile(vector<string>& board_at_i_9);
-    void board_at_9_i_inputFile(vector<string>& board_at_9_i);
-    void board_at_i_0_inputFile(vector<string>& board_at_i_0);
-    vector<vector<string>> user_board();
-    void printBoard();
-};
+#include "MonopolyBoard.h"
+#include <fstream> 
+#include <iostream> 
+using namespace std;
 
 void UserBoard::board_at_0_i_inputFile(vector<string>& board_at_0_i) {
     ifstream inputFile("board_at_0_i.txt");
@@ -21,9 +10,9 @@ void UserBoard::board_at_0_i_inputFile(vector<string>& board_at_0_i) {
         cerr << "No file found: board_at_0_i.txt" << endl;
         return;
     }
-    int index = 0;
-    while (index < board_at_0_i.size() && getline(inputFile, board_at_0_i[index])) {
-        index++;
+    string line;
+    while (getline(inputFile, line)) {
+        board_at_0_i.push_back(line);
     }
     inputFile.close();
 }
@@ -34,9 +23,9 @@ void UserBoard::board_at_i_9_inputFile(vector<string>& board_at_i_9) {
         cerr << "No file found: board_at_i_9.txt" << endl;
         return;
     }
-    int index = 0;
-    while (index < board_at_i_9.size() && getline(inputFile, board_at_i_9[index])) {
-        index++;
+    string line;
+    while (getline(inputFile, line)) {
+       board_at_i_9.push_back(line);
     }
     inputFile.close();
 }
@@ -47,9 +36,9 @@ void UserBoard::board_at_9_i_inputFile(vector<string>& board_at_9_i) {
         cerr << "No file found: board_at_9_i.txt" << endl;
         return;
     }
-    int index = 0;
-    while (index < board_at_9_i.size() && getline(inputFile, board_at_9_i[index])) {
-        index++;
+    string line; 
+    while (getline(inputFile, line)) {
+        board_at_9_i.push_back(line);
     }
     inputFile.close();
 }
@@ -59,36 +48,38 @@ void UserBoard::board_at_i_0_inputFile(vector<string>& board_at_i_0) {
     if (!inputFile.is_open()) {
         cerr << "No file found: board_at_i_0.txt" << endl;
         return;
-    }
-    int index = 0;
-    while (index < board_at_i_0.size() && getline(inputFile, board_at_i_0[index])) {
-        index++;
+    }   
+    string line; 
+    while (getline(inputFile, line)) {
+        board_at_i_0.push_back(line);
     }
     inputFile.close();
 }
 
 vector<vector<string>> UserBoard::user_board() {
-    vector<vector<string>> user_monopoly_board(ROW, vector<string>(COL, "Empty")); // Initialize with "Empty"
+    vector<vector<string>> user_monopoly_board(ROW, vector<string>(COL, "")); // Initialize with "Empty"
     vector<string> street(COL); // Temporary storage for reading data
 
     board_at_0_i_inputFile(street);
     for (int col = 0; col < COL; col++) {
         user_monopoly_board[0][col] = street[col];
+        cout << user_monopoly_board[0][col] << " ";
     }
+    cout << endl; 
 
     board_at_i_9_inputFile(street);
     for (int row = 0; row < ROW; row++) {
-        user_monopoly_board[row][9] = street[row];
+        user_monopoly_board[row][0] = street[row];
     }
 
     board_at_9_i_inputFile(street);
     for (int col = 0; col < COL; col++) {
-        user_monopoly_board[9][col] = street[col];
+        user_monopoly_board[6][col] = street[col];
     }
 
     board_at_i_0_inputFile(street);
     for (int row = 0; row < ROW; row++) {
-        user_monopoly_board[row][0] = street[row];
+        user_monopoly_board[row][6] = street[row];
     }
 
     return user_monopoly_board;
@@ -127,8 +118,4 @@ void UserBoard::printBoard() {
     }
 }
 
-int main() {
-    UserBoard userboard;
-    userboard.printBoard();
-    return 0;
-}
+

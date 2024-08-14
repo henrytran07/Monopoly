@@ -1,0 +1,326 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <tuple>
+#include <random>
+#include <string>
+
+using namespace std;
+
+class Money {
+public:
+    void passGo(int player) {
+        cout << "Player " << player << " passed Go and collected $200." << endl;
+    }
+
+    void chargeIt(int player, int amount) {
+        cout << "Player " << player << " is charged $" << amount << "." << endl;
+    }
+};
+
+class Color {
+private:
+    
+    static int index;
+    static int r, p, cost;
+    static double p_rate, r_rate, cost_rate;
+protected:
+    string street_name;
+    int price, rent, cost_built;
+    tuple<int, int, int> color() const {
+        return make_tuple(price, rent, cost_built);
+    }
+public:
+static vector<string> city_name;
+    Color(string name, int p, int r, int cost) : street_name(name), price(p), rent(r), cost_built(cost) {}
+    Color(string name) : street_name(name), price(0), rent(0), cost_built(0) {}
+    static void resetValues() {
+        p = 2000;
+        r = 2;
+        cost = 50;
+        p_rate = 1.1;
+        r_rate = 1.1;
+        cost_rate = 1.2;
+    }
+    static void marginalAddUp() {
+        p_rate += 0.1;
+        r_rate += 0.1;
+        cost_rate += 0.1;
+    }
+    string getStreetName() const { return street_name; }
+    int getPrice() const { return price; }
+    int getRent() const { return rent; }
+    int getCostBuilt() const { return cost_built; }
+    static vector<Color*> BROWN() {
+        vector<Color*> colors;
+        resetValues();
+        while (index < 3) {
+            Color* city = new Color(city_name[index++], p, r, cost);
+            colors.push_back(city);
+        }
+        return colors;
+    }
+    static vector<Color*> LIGHT_BLUE() {
+        vector<Color*> colors;
+        resetValues();
+        while (index < 9) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> PINK() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 12) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> ORANGE() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 15) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> RED() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 18) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> YELLOW() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 21) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> GREEN() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 24) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    static vector<Color*> DARK_BLUE() {
+        vector<Color*> colors;
+        resetValues();
+        marginalAddUp();
+        while (index < 27) {
+            colors.push_back(new Color(city_name[index++], p *= p_rate, r *= r_rate, cost *= cost_rate));
+        }
+        return colors;
+    }
+    map<vector<Color*>, map<string, tuple<int, int, int>>> Map() {
+        map<vector<Color*>, map<string, tuple<int, int, int>>> myMap;
+
+        auto populateMap = [&](const vector<Color*>& colorCategory) {
+            auto& map = myMap[colorCategory];
+
+            for (const auto& color : colorCategory) {
+                map[color->street_name] = color->color();
+                cout << "Adding: " << color->street_name << endl;
+            }
+        };
+
+        vector<Color*> brown_color = Color::BROWN();
+        populateMap(brown_color);
+
+        vector<Color*> light_blue_color = Color::LIGHT_BLUE();
+        populateMap(light_blue_color);
+
+        vector<Color*> pink_color = Color::PINK();
+        populateMap(pink_color);
+
+        vector<Color*> orange_color = Color::ORANGE();
+        populateMap(orange_color);
+
+        vector<Color*> red_color = Color::RED();
+        populateMap(red_color);
+
+        vector<Color*> yellow_color = Color::YELLOW();
+        populateMap(yellow_color);
+
+        vector<Color*> green_color = Color::GREEN();
+        populateMap(green_color);
+
+        vector<Color*> dark_blue_color = Color::DARK_BLUE();
+        populateMap(dark_blue_color);
+
+        return myMap;
+    }
+};
+
+vector<string> Color::city_name = { "Go", "Jail", "Tokyo", "New York", "Paris", "Sydney", "Rio de Janeiro", "Toronto", "London", "Beijing", "Dubai", "Bangkok", "Seoul", "Berlin", "Sao Paulo", "Hanoi", "Vienna", "Copenhagen", "Vancouver", "Athens", "Singapore" };
+int Color::index = 0;
+int Color::r = 2;
+int Color::p = 2000;
+int Color::cost = 50;
+double Color::p_rate = 1.1;
+double Color::r_rate = 1.1;
+double Color::cost_rate = 1.2;
+
+class Virtual_Monopoly_Board {
+private:
+    Money* money;
+    Color* color;
+    vector<vector<Color*>> city;
+    vector<string> city_names;
+    static random_device rd;
+    static mt19937 gen;
+    map<int, int> positionMap;
+    int position;
+    map<vector<Color*>, map<string, tuple<int, int, int>>> myMap;
+    
+    bool diceCheck(int player);
+    int throwingDice();
+    bool jailCheck(string& cities);
+    
+    int random_number(int begin, int end);
+    string correspondingCityName(int player);
+    void positionDeclaration();
+    void city_name();
+public:
+    void stepMove(int player);
+    Virtual_Monopoly_Board() : money(new Money()), color(new Color("")) {
+        positionDeclaration();
+        myMap = color->Map();
+    }
+
+    ~Virtual_Monopoly_Board() {
+        delete money;
+        delete color;
+    }
+
+    void initializePosition(int player) {
+        positionMap[player] = 0;
+    }
+
+    void throwDiceForStep(int player);
+    void printBoard(int player);
+};
+
+random_device Virtual_Monopoly_Board::rd;
+mt19937 Virtual_Monopoly_Board::gen(rd());
+
+void Virtual_Monopoly_Board::positionDeclaration() {
+    for (int i = 1; i <= 4; ++i) {
+        positionMap[i] = 0;
+    }
+}
+
+bool checkPosition(int number) {
+    return number >= 0 && number < 27;
+}
+
+string Virtual_Monopoly_Board::correspondingCityName(int player) {
+    int position = positionMap[player];
+    return Color::city_name[position];
+}
+
+int Virtual_Monopoly_Board::random_number(int begin, int end) {
+    uniform_int_distribution<> dis(begin, end);
+    return dis(gen);
+}
+
+int Virtual_Monopoly_Board::throwingDice() {
+    return random_number(1, 6);
+}
+
+void Virtual_Monopoly_Board::throwDiceForStep(int player) {
+    int dice_one = throwingDice();
+    int dice_two = throwingDice();
+    int steps = dice_one + dice_two;
+
+    int& position = positionMap[player];
+    position += steps;
+    if (!checkPosition(position)) {
+        initializePosition(player);
+        money->passGo(player);
+    }
+}
+
+void Virtual_Monopoly_Board::printBoard(int player) {
+    cout << "Player " << player << " is at " << correspondingCityName(player) << endl;
+}
+
+bool Virtual_Monopoly_Board::jailCheck(string& cities) {
+    return cities == "Jail";
+}
+
+bool Virtual_Monopoly_Board::diceCheck(int player) {
+    int user_choice;
+    int dice_one = throwingDice();
+    int dice_two = throwingDice();
+    do {
+        cout << "You have two options: ";
+        cout << "(1) Rolling Double, (2) Rolling More Than 10. ";
+        cout << "Please choose 1 of them: ";
+        cin >> user_choice;
+    } while (user_choice != 1 && user_choice != 2);
+
+    if (user_choice == 1) {
+        if (dice_one == dice_two) {
+            money->chargeIt(player, 50);
+            return true;
+        } else {
+            return false;
+        }
+    } else if (user_choice == 2) {
+        if (dice_one + dice_two < 10) {
+            return false;
+        } else {
+            money->chargeIt(player, 50);
+            return true;
+        }
+    }
+    return false; // default return to avoid warning
+}
+
+void Virtual_Monopoly_Board::stepMove(int player) {
+    string cities = correspondingCityName(player);
+    if (!jailCheck(cities)) {
+        throwDiceForStep(player);
+    } else {
+        if (diceCheck(player)) {
+            throwDiceForStep(player);
+        } else {
+            cout << "You can try your luck in your next turn." << endl;
+        }
+    }
+}
+
+int main() {
+    Virtual_Monopoly_Board board;
+
+    // Initialize positions for players
+    for (int player = 1; player <= 4; ++player) {
+        board.initializePosition(player);
+    }
+
+    // Print initial positions
+    for (int player = 1; player <= 4; ++player) {
+        board.printBoard(player);
+    }
+
+    // Simulate some moves
+    for (int player = 1; player <= 4; ++player) {
+        cout << "\nPlayer " << player << "'s turn:" << endl;
+        board.throwDiceForStep(player);
+        board.printBoard(player);
+        board.stepMove(player);
+    }
+
+    return 0;
+}

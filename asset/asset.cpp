@@ -317,4 +317,3 @@ void Asset::mapUpdate(map<int, map<Color*, vector<Properties*>>>& myMap){
 
 void Asset::modifiedMap(map<int, map<Color*, vector<Properties*>>>& myMap){
     myMap = asset; 
-}

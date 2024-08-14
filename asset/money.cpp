@@ -34,5 +34,11 @@ double Money:: payTax(int player){
 }
 
 void Money:: passGo(int player){
+    cout << endl; 
+    cout << "Player " << player << " passes Go" << endl; 
     sellIt(player, 200);
+}
+
+void Money:: eraseMap(int player){
+    cash.erase(player);
 }

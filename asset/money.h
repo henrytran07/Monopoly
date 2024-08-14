@@ -26,5 +26,6 @@ class Money {
         void sellIt(int player, int value); 
         double payTax(int player);
         void passGo(int player);
+        void eraseMap(int player);
 };
 #endif 

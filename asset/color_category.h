@@ -12,9 +12,16 @@ class Color {
         vector<string> city_name; 
         map<vector<Color*>, map<string, tuple<int, int, int>>> myMap; 
         void inputFile();
-        int index; 
         int r, p, cost; 
         double p_rate, r_rate, cost_rate; 
+        int temp_p, temp_r, temp_cost; 
+
+        void resetValues();
+        void marginalAddUp();
+
+        void temporaryValue(int p, int r, int cost);
+        void extractTemporaryValue(int &p, int& r, int& cost);
+        void multiplication();
     protected:
         string street_name; 
         int price, rent, cost_built; 
@@ -24,26 +31,14 @@ class Color {
     public: 
         Color(string name, int p, int r, int cost): street_name(name), price(p), rent(r), cost_built(cost) {
             inputFile();
-            initializeValue();
         }
-        Color(): street_name(""), rent(0), cost_built(0) {}
+        Color(): street_name(""), price(0), rent(0), cost_built(0) {
+            inputFile();
+            inititializeMap();
+        }
         void printMap(const map<vector<Color*>, map<string, tuple<int, int, int>>> &myMap) const; 
-        void initializeValue(){
-            index = 1; 
-        }
-        void resetValues() {
-            p = 2000; 
-            r = 2; 
-            cost = 50; 
-            p_rate = 1.1; 
-            r_rate = 1.1; 
-            cost_rate = 1.2; 
-        }
-        void marginalAddUp(){
-            p_rate += 0.1; 
-            r_rate += 0.1; 
-            cost_rate += 0.1; 
-        }
+        bool checkNoneValueSpot(const string& city_name);
+
         string getStreetName() const {return street_name;}
         int getPrice() const {return price;}
         int getRent() const {return rent;}
@@ -51,84 +46,178 @@ class Color {
         vector<Color*> BROWN() {
             vector<Color*> colors; 
             resetValues();
-            while (index < 3){
-                Color* city = new Color(city_name[index++], p, r, cost);
+
+            for (int index = 0; index < 3; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement.
+                } else {
+                    // No conditional requiremnt in this clause. 
+                }
+
+                Color* city = new Color(city_name[index], p, r, cost);
                 colors.push_back(city);
+                extractTemporaryValue(p, r, cost);
             }
+            
+            if (colors.empty()) {
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> BROWN() function" << endl; 
+            }
+
             return colors; 
         }
         vector<Color*> LIGHT_BLUE() {
             vector<Color*> colors; 
-            resetValues();
-            while (index < 9){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+
+            for (int index = 3; index , 9; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement. 
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
+            }
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> LIGHT_BLUE() function" << endl; 
             }
             return colors;
         }
 
         vector<Color*> PINK() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 12){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+
+            for (int index = 9; index < 12; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement. 
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
             }
-            return colors;
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> PINK() FUNCTION" << endl; 
+            }
+            return colors; 
         }
 
         vector<Color*> ORANGE() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 15){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+
+            for (int index = 12; index < 15; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requireemnt in this if-statement.
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r , cost));
+                extractTemporaryValue(p, r, cost);
             }
-            return colors;
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> ORANGE() FUNCTION" << endl; 
+            }
+            return colors; 
         }
 
         vector<Color*> RED() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 18){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+
+            for (int index = 15; index < 18; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
             }
-            return colors;
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> RED() FUNCTION" << endl; 
+            }
+            return colors; 
         }
 
         vector<Color*> YELLOW() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 21){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+   
+            for (int index = 18; index < 21; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement. 
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
             }
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> YELLOW() FUNCTION" << endl; 
+            }
+            
             return colors;
         }
 
         vector<Color*> GREEN() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 24){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+            
+            for (int index = 21; index < 24; index++){
+                if((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement.
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
             }
-            return colors;
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> GREEN() FUNCTION" << endl; 
+            }
+            
+            return colors; 
         }
 
         vector<Color*> DARK_BLUE() {
             vector<Color*> colors; 
-            resetValues();
-            marginalAddUp();
-            while (index < 27){
-                colors.push_back(new Color(city_name[index++], p*= p_rate, r *= r_rate, cost *= cost_rate));
+
+            for (int index = 24; index < 27; index++){
+                if ((checkNoneValueSpot(city_name[index]))){
+                    // no need to add additional requirement in this if-statement
+                } else {
+                    marginalAddUp();
+                    multiplication();
+                }
+
+                colors.push_back(new Color(city_name[index], p, r, cost));
+                extractTemporaryValue(p, r, cost);
             }
-            return colors;
+
+            if (colors.empty()){
+                cout << "EMPTY VECTOR IN VECTOR<COLOR*> DARK_BLUE() FUNCTION" << endl; 
+            }
+
+            return colors; 
         }
      
-        map<vector<Color*>, map<string, tuple<int, int, int>>> Map(); 
+        map<vector<Color*>, map<string, tuple<int, int, int>>> distributingMap(); 
         tuple<int, int, int> color_information(map<vector<Color*>, map<string, tuple<int, int, int>>> myMap, const string& street_name);
-        void intitializeMap();
+        void inititializeMap();
         map<vector<Color*>, map<string, tuple<int, int, int>>> const colorMap();
         void priceAdjustment(int adjusted_value);
         void rentAdjustment(int adjusted_rent);

@@ -22,6 +22,58 @@ void Color:: inputFile(){
     inputFile.close();
 }
 
+void Color:: resetValues(){
+    p = 100; 
+    r = 50; 
+    cost = 50; 
+    p_rate = 1.1; 
+    r_rate = 1.1; 
+    cost_rate = 1.1; 
+}
+
+void Color:: marginalAddUp(){
+    p_rate += 1.1; 
+    r_rate += 1.1; 
+    cost_rate += 1.1; 
+}
+
+bool Color:: checkNoneValueSpot(const string& city_name){
+    if ((city_name == "Go to Jail") || (city_name == "Free Parking") || (city_name == "Chance") || (city_name == "Go")){
+        if (city_name == "Go"){
+            resetValues();
+        }
+
+        temporaryValue(p, r, cost);
+        p = 0; 
+        r = 0; 
+        cost = 0; 
+        return true; 
+    } else {
+        return false; 
+    }
+}
+void Color:: temporaryValue(int p, int r, int cost){
+    if ((p == 0) && (r == 0) && (cost == 0)){
+        return; 
+    }
+    
+    temp_p = p; 
+    temp_r = r; 
+    temp_cost = cost; 
+}
+
+void Color:: extractTemporaryValue(int &p, int& r, int& cost){
+    p = temp_p; 
+    r = temp_r; 
+    cost = temp_cost; 
+}
+
+void Color:: multiplication(){
+    p *= p_rate; 
+    r *= r_rate; 
+    cost *= cost_rate; 
+}
+
 void Color:: printMap(const map<vector<Color*>, map<string, tuple<int, int, int>>>& myMap) const {
     for (const auto & group : myMap){
         cout << "Group of Colors: " << endl; 
@@ -36,7 +88,7 @@ void Color:: printMap(const map<vector<Color*>, map<string, tuple<int, int, int>
         }
     }
 }
-map<vector<Color*>, map<string, tuple<int, int, int>>> Color::Map() {
+map<vector<Color*>, map<string, tuple<int, int, int>>> Color::distributingMap() {
     map<vector<Color*>, map<string, tuple<int, int, int>>> mapCheck;
 
     auto populateMap = [&](const vector<Color*>& colorCategory) {
@@ -50,15 +102,9 @@ map<vector<Color*>, map<string, tuple<int, int, int>>> Color::Map() {
 
     vector<Color*> brown_color = Color::BROWN();
     populateMap(brown_color);
-    for (const auto brown : brown_color) {
-        delete brown;
-    }
 
     vector<Color*> light_blue_color = Color::LIGHT_BLUE();
     populateMap(light_blue_color);
-    for (const auto light_blue : light_blue_color) {
-        delete light_blue;
-    }
 
     vector<Color*> pink_color = Color::PINK();
     populateMap(pink_color);
@@ -81,8 +127,8 @@ map<vector<Color*>, map<string, tuple<int, int, int>>> Color::Map() {
     return mapCheck;
 }
 
-void Color:: intitializeMap(){
-    myMap = Map();
+void Color:: inititializeMap(){
+    myMap = distributingMap();
 }
 
 map<vector<Color*> , map<string, tuple<int, int, int>>> const Color::colorMap(){

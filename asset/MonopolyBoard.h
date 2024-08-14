@@ -6,17 +6,17 @@
 #include <vector> 
 using namespace std; 
 
-struct UserBoard {
-    static const int COL = 10; 
-    static const int ROW = 10; 
-    void board_at_0_i_inputFile(vector<string>& board_at_0_i);
-    void board_at_i_9_inputFile(vector<string>& board_at_i_9);
-    void board_at_9_i_inputFile(vector<string>& board_at_9_i);
-    void board_at_i_0_inputFile(vector<string>& board_at_i_0);
-    vector<vector<string>> user_board();
-    void printBoard();
+class UserBoard {
+    private: 
+        static const int COL = 7; 
+        static const int ROW = 7; 
+        void board_at_0_i_inputFile(vector<string>& board_at_0_i);
+        void board_at_i_9_inputFile(vector<string>& board_at_i_9);
+        void board_at_9_i_inputFile(vector<string>& board_at_9_i);
+        void board_at_i_0_inputFile(vector<string>& board_at_i_0);
+        vector<vector<string>> user_board();
+    public:     
+        void printBoard();
 };
-// struct Board {
-//     vector<Color*, vector<Color*>> monopoly_board; 
-// };
+
 #endif 

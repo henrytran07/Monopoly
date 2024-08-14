@@ -1,0 +1,46 @@
+Welcome to our Monopoly_Like Board Game. 
+
+There are some guidelines needed you to read thoroughly before starting to play the game. 
+
+1. Objective
+The goal of the game is to become the wealthiest player through buying, renting, and selling properties.
+
+2. Setup
+- Board: A square board divided into properties, utilities, railroads, chance, community chest, and special spaces (Go, Jail, Free Parking, Go to Jail).
+- Properties: Different cities and famous locations, e.g., New York, Tokyo, London, etc.
+- Players: 2-6 players.
+- Currency: Paper money or digital balance to keep track of players' wealth.
+- Tokens: Each player chooses a token to move around the board.
+- Cards: Chance and Community Chest cards provide instructions to players.
+- Houses and Hotels: Used to increase property value.
+
+3. Game Components
+- Board: Contains 40 spaces including properties, utilities, railroads, and special spaces.
+- Title Deed Cards: For each property, showing purchase price, rent, and building costs.
+- Money: Denominations typically include $1, $5, $10, $20, $50, $100, $500.
+- Chance and Community Chest Cards: Cards with instructions that players must follow when drawn.
+- Houses and Hotels: Small buildings placed on properties to increase rent.
+
+4. Game Play
+- Starting: Each player starts at the "Go" space with a set amount of money.
+- Rolling Dice: Players take turns rolling two six-sided dice and move their token clockwise around the board.
+- Buying Property: When landing on an unowned property, the player can buy it by paying the bank the listed price.
+- Paying Rent: If a player lands on a property owned by another player, they must pay rent to the owner.
+- Building: Players can build houses and hotels on their properties to increase rent once they own all properties in a color group.
+- Chance and Community Chest: Players follow instructions on these cards when drawn.
+- Special Spaces: 
+  - Go: Collect $200 each time passing this space.
+  - Jail: Players can be sent to Jail and must pay a fine, roll doubles, or use a "Get Out of Jail Free" card to get out.
+  - Free Parking: A resting space with no specific action.
+  - Go to Jail: Move directly to Jail without passing "Go" or collecting $200.
+- Trading: Players can trade properties, money, and "Get Out of Jail Free" cards.
+- Bankruptcy: A player is bankrupt if they owe more money than they can pay. They must turn over all their assets to the creditor or the bank and are out of the game.
+
+5. Winning the Game
+The game continues until all but one player is bankrupt. The remaining player is declared the winner.
+
+6. Additional Rules
+- Auctions: If a player decides not to buy a property they land on, it is auctioned to the highest bidder.
+- Mortgages: Players can mortgage properties to raise money. Mortgaged properties do not earn rent.
+
+These guidelines provide a basic structure for a Monopoly-like game. Feel free to customize the rules and components to fit your theme and preferences.
