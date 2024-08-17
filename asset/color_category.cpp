@@ -8,6 +8,190 @@
 
 using namespace std;
 
+Color:: Color(string name, int p, int r, int cost): street_name(name), price(p), rent(r), cost_built(cost) {
+    inputFile();
+}
+
+Color:: Color(): street_name("Go"), price(0), rent(0), cost_built(0) {
+    inputFile();
+    inititializeMap();
+}
+
+vector<Color*> Color::BROWN() {
+    vector<Color*> colors; 
+    resetValues();
+
+    for (int index = 0; index < 3; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement.
+        } else {
+        // No conditional requiremnt in this clause. 
+        }
+
+        Color* city = new Color(city_name[index], p, r, cost);
+        colors.push_back(city);
+        extractTemporaryValue(p, r, cost);
+    }
+            
+    if (colors.empty()) {
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> BROWN() function" << endl; 
+    }
+
+    return colors; 
+}
+
+vector<Color*> Color::LIGHT_BLUE() {
+    vector<Color*> colors; 
+
+    for (int index = 3; index < 9; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement. 
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> LIGHT_BLUE() function" << endl; 
+    }
+    return colors;
+}
+
+vector<Color*> Color::PINK() {
+    vector<Color*> colors; 
+
+    for (int index = 9; index < 12; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement. 
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> PINK() FUNCTION" << endl; 
+    }
+    
+    return colors; 
+}
+
+vector<Color*> Color:: ORANGE() {
+    vector<Color*> colors; 
+
+    for (int index = 12; index < 15; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requireemnt in this if-statement.
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r , cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> ORANGE() FUNCTION" << endl; 
+    }
+    
+    return colors; 
+}
+
+vector<Color*> Color:: RED() {
+    vector<Color*> colors; 
+
+    for (int index = 15; index < 18; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> RED() FUNCTION" << endl; 
+    }
+    
+    return colors; 
+}
+
+vector<Color*> Color:: YELLOW() {
+    vector<Color*> colors; 
+   
+    for (int index = 18; index < 21; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement. 
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> YELLOW() FUNCTION" << endl; 
+    }
+            
+    return colors;
+}
+
+vector<Color*> Color:: GREEN() {
+    vector<Color*> colors; 
+            
+    for (int index = 21; index < 24; index++){
+        if((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement.
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> GREEN() FUNCTION" << endl; 
+    }
+            
+    return colors; 
+}
+
+vector<Color*>Color:: DARK_BLUE() {
+    vector<Color*> colors; 
+
+    for (int index = 24; index < 27; index++){
+        if ((checkNoneValueSpot(city_name[index]))){
+            // no need to add additional requirement in this if-statement
+        } else {
+            marginalAddUp();
+            multiplication();
+        }
+
+        colors.push_back(new Color(city_name[index], p, r, cost));
+        extractTemporaryValue(p, r, cost);
+    }
+
+    if (colors.empty()){
+        cout << "EMPTY VECTOR IN VECTOR<COLOR*> DARK_BLUE() FUNCTION" << endl; 
+    }
+
+    return colors; 
+}
 void Color:: inputFile(){
     ifstream inputFile; 
     inputFile.open("cities_names.txt");
@@ -75,6 +259,11 @@ void Color:: multiplication(){
 }
 
 void Color:: printMap(const map<vector<Color*>, map<string, tuple<int, int, int>>>& myMap) const {
+    if (myMap.empty()){
+        cout << "Empty map in colorCategory file " << endl; 
+        return; 
+    }
+
     for (const auto & group : myMap){
         cout << "Group of Colors: " << endl; 
         for (const auto& color: group.first)
@@ -88,16 +277,20 @@ void Color:: printMap(const map<vector<Color*>, map<string, tuple<int, int, int>
         }
     }
 }
+
+void Color:: mapUpdate(map<vector<Color*>, map<string, tuple<int, int, int>>> mapColor){
+    mapColor = myMap; 
+}
 map<vector<Color*>, map<string, tuple<int, int, int>>> Color::distributingMap() {
     map<vector<Color*>, map<string, tuple<int, int, int>>> mapCheck;
 
     auto populateMap = [&](const vector<Color*>& colorCategory) {
-        auto& map = myMap[colorCategory];
+        auto& map = mapCheck[colorCategory];
 
         for (const auto& color : colorCategory) {
             map[color->street_name] = color->color();
-            cout << "Adding: " << color->street_name << endl;
         }
+        
     };
 
     vector<Color*> brown_color = Color::BROWN();
@@ -123,7 +316,6 @@ map<vector<Color*>, map<string, tuple<int, int, int>>> Color::distributingMap() 
 
     vector<Color*> dark_blue_color = Color::DARK_BLUE();
     populateMap(dark_blue_color);
-
     return mapCheck;
 }
 

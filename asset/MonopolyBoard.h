@@ -8,8 +8,9 @@ using namespace std;
 
 class UserBoard {
     private: 
-        static const int COL = 7; 
-        static const int ROW = 7; 
+        const int COL = 7; 
+        const int ROW = 7; 
+        
         void board_at_0_i_inputFile(vector<string>& board_at_0_i);
         void board_at_i_9_inputFile(vector<string>& board_at_i_9);
         void board_at_9_i_inputFile(vector<string>& board_at_9_i);

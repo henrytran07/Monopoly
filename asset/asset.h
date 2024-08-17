@@ -1,59 +1,106 @@
 #ifndef ASSET_H
 #define ASSET_H
-
 #include "color_category.h"
+#include "money.h" 
+#include "virtual_monopoly_board.h"
 #include <iostream> 
 #include <algorithm> 
 #include <vector> 
-#include "money.h"
-#include "properties.h"
 #include <tuple> 
 using namespace std; 
+
+class Money;
+class Virtual_Monopoly_Board;
+class Upgrade; 
+class Properties: public Color {
+    public: 
+        virtual void display() const = 0; 
+        Properties(string nm, int val, int r, int cost);
+        virtual ~Properties() = default; 
+};
+
+class House: public Properties {
+    public: 
+        House(string nm, int val, int r, int cost);
+        void display() const override;
+};
+
+class Hotel: public Properties {
+    public: 
+        Hotel(string nm, int val, int r, int cost);
+        void display() const override; 
+};
 
 class Asset { 
     protected: 
         Money* money; 
         Color* color; 
+        Upgrade* upgrade; 
+        Virtual_Monopoly_Board* vmb; 
         map<int, map<Color*, vector<Properties*>>> asset;
         map<vector<Color*>, map<string, tuple<int, int, int>>> myMap;
 
-        void lower_case(string &response);
-        void userHandleResponse(string &response);
+        map<int, string> playerName; 
+        vector<string> special_space = {"Go", "Go to Jail", "Chance", "Free Parking", "Community Chest"};
+        
+        void userTrialInput(string &response, const string& first_condition, const string& second_condition);
 
-        void eraseAsset(Color* color);
-        int netWorth(int player);
         bool ownerVerification(Color* street, int player);
-        bool streetLookUp(Color* street); // rename
-        int findOwnership(Color* street); // rename 
-        bool bankcruptcy(Color* color, int player);
+        bool streetLookUp(Color* street); 
+
+        
+        int findOwner(Color* street);
+        
         void cashDeduction(Money* money, int& amount_due, int player, int owner, int sellingAsset);
-        void automaticSelling(int rent, int player, int owner);
-        void manualSelling(int rent, int player, int owner);
+        void eraseAsset(Color* color);
 
     public:    
-        Asset() {
-            money = new Money();
-            color = new Color();
-        }
-        Asset(Money* m, Color* c): money(m), color(c) {
-            if (color != nullptr) {
-                myMap = color -> colorMap();
-            } else {
-                cerr << "Color object is null" << endl; 
-            }
-        }
+        Asset();
+        Asset(Money* m, Color* c);
+        virtual~Asset() = default; 
 
-        map<vector<Color*>, map<string, tuple<int, int, int>>> getMyMap() {return myMap;}
-        void printAsset() const; 
+        void userHandleResponse(string& response, const string& first_condition, const string& second_condition);
+        void updatedNameMap(map<int, string> &mapName);
+
+        map<vector<Color*>, map<string, tuple<int, int, int>>> getMyMap();
+        void printAsset(); 
+
+        int calculatingPlayerNetWorth(int player);
         void buyAsset(Color* color, int player);
+
+        bool bankruptcy(Color* color, int player);
+        void automaticSelling(int rent, int player, int owner);
+        void manualSelling(int rent, int player, int owner, const string& first_condition, const string& second_condition);
         void sellAsset(Color* color, int player);
         map<int, map<Color*, vector<Properties*>>> getAsset() {return asset;}
-        void printAsset() const; 
+
         void mapUpdate(map<int, map<Color*, vector<Properties*>>>& myMap);
         void modifiedMap(map<int, map<Color*, vector<Properties*>>>& myMap);
 
-        Money* getMoney() {return money;}
-        Color* getColor() {return color;}
+        void playerAssetElimination(int player);
+        Money* getMoney(); 
+        Color* getColor();
+};
+
+class Upgrade: public Asset {
+    private: 
+        Asset* asst; 
+        vector<Properties*>properties;
+        map<int, map<Color*, vector<Properties*>>> myMap; 
+
+        int maximum_houses = 4;
+        const double rent_rate = 1.1;
+        const double value_rate = 1.1;
+        const double cost_built_rate = 1.1;
+
+        void addProperties(map<int, map<Color*, vector<Properties*>>> &map_color, Color* color, int player, Asset* asset, Upgrade* upgrade, Money* money);
+        void houseUpgrade(Color* color, int player, const string& first_condition, const string& second_condition);
+        void hotelUpgrade(Color* color, int playe, const string& first_condition, const string& second_condition);
+        void valueAdjustment(Color* color, int player);
+    public: 
+        Upgrade(Asset* asst);
+        void upgradeProperties(Color* color, int player);
+        void mapChange (map<int, map<Color*, vector<Properties*>>>&asset);
 };
 
 #endif

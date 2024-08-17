@@ -446,6 +446,7 @@ class Asset {
                 cout << "Your response is neither yes nor no. Could you choose your option again? ";
                 cin >> response; 
                 lower_case(response);
+                cin.ignore();
             }
         }
 
@@ -527,7 +528,7 @@ class Asset {
         // Asset(): money(nullptr), color(nullptr) {}
         void printAsset(){
             for (const auto player : asset){
-                cout << "player " << player.first << ": ";
+                cout << playerName[player.first] << ": ";
                 for (const auto city: player.second){
                     cout << "The city name: " << city.first->getStreetName() << endl;
                     cout << "Properties's size: " << city.second.size() << endl; 
@@ -548,7 +549,8 @@ class Asset {
 
             string name = playerName[player];
             if (name.empty()) {cout << "Needed to check" << endl; } 
-            cout << street -> getPrice() << ": street_value" << endl; 
+
+            cout << street -> getStreetName() << " has the valuation of $" << street -> getPrice() << endl; 
             string response; 
             // figure out this logic later 
             // tuple<int, int, int> colorIn = color -> color_information(myMap, street -> getStreetName());
@@ -559,12 +561,12 @@ class Asset {
             if ((!ownerVerification(street, player)) && (streetLookUp(street))){
 
                 if (money -> getCash(player) >= value){
-                    cin.ignore();
                     cout << name << ": Do you want to acquire this asset on "
                         << street -> getStreetName() << " street having the value of $"
                         << value << "? "; 
                     getline(cin, response);
                     lower_case(response);
+                    
 
                     if (response == "yes"){
                         money -> chargeIt(player, value);
@@ -580,9 +582,9 @@ class Asset {
                 value *= 2; 
                 int own = findOwner(street);
                 if (money -> getCash(player) >= value){
-                    cin.ignore();
+                    
                     cout << name << ": Do you want to acquire this asset on "
-                        << street -> getStreetName() << " street from player " << own << " which cost you $" 
+                        << street -> getStreetName() << " street from " << playerName[own] << " which cost you $" 
                         << value << "? ";
                     getline(cin, response);
                     lower_case(response);
@@ -606,7 +608,7 @@ class Asset {
                         cout << "Congratulations on " << name<< endl; 
                     }
                 } else if (money -> getCash(player) < value) {
-                    cout << "Not enough to acquire this asset " << endl; 
+                    cout << name << ": Not enough to acquire this asset " << endl; 
                 }
             } else {
                 cout << name << " does not have enough to acquire this asset" << endl; 
@@ -633,6 +635,7 @@ class Asset {
             if (findOwner(color) != -1){
                 if (total_asset < color -> getRent()){
                     cout << name << " is bankrupt" << endl; 
+                    playerName.erase(player);
                     return true; 
                 } else {
                     return false; 
@@ -657,13 +660,15 @@ class Asset {
             }
         }
         void cashDeduction(Money* money, int &amount_due, int player, int owner, int sellingAsset){
-            
             money -> sellIt(player, sellingAsset);
             
             if (money -> getCash(player) >= amount_due) {
                 money -> chargeIt(player, amount_due); 
-                money -> sellIt(owner, amount_due);
-                
+                if (owner == 0){
+                    // nothing here
+                } else {
+                    money -> sellIt(owner, amount_due);
+                } 
                 amount_due = 0; 
             }
         }
@@ -696,7 +701,12 @@ class Asset {
             cout << playerName[player] << " is selling " << cheapest -> getStreetName()
                 << " with the price of $" << cheapest -> getPrice() << endl; 
             money -> sellIt(player, value);
-            money -> sellIt(owner, rent);
+            if (owner == 0){
+                // nothing here
+            } else {
+                money -> sellIt(owner, rent);
+            }
+            
             
             if (rent > money -> getCash(player)){
                 automaticSelling(rent, player, owner);
@@ -723,8 +733,6 @@ class Asset {
 
             if (map != asset.end()){
                 auto& it = map -> second; 
-                cin.ignore();
-
 
                 while (amount_due > money -> getCash(player)){
                     bool assetSold = false; 
@@ -811,13 +819,12 @@ class Asset {
             
             string name = playerName[player];
             if((!ownerVerification(color, player)) && (!streetLookUp(color))){
+                cout << "Your rent costs you $" << rent << endl; 
                 if (rent > cash){
                     if ((!bankruptcy(color, player))){
-                        cin.ignore();
                         cout << "Your cash is less than your rent. Do you want us to automatically sell for you "
                             << " or you want to manually sell your asset? (a or b): ";
                         getline(cin, response);
-
                         if (response == "a"){
                             automaticSelling(rent, player, own);
                             buyAsset(color, player);
@@ -829,6 +836,7 @@ class Asset {
                         cout << "You do not have enough money to pay rent" << endl; 
                     }
                 } else if (cash >= rent) {
+                    cout << "The property is owned by " << playerName[own] << endl; 
                     cout << "Charging " << name << " $" << rent << " for rent" << endl; 
                     money -> chargeIt(player, rent);
                     money -> sellIt(own, rent);
@@ -895,7 +903,7 @@ class Upgrade: public Asset{
             }
             int properties_size = properties.size();
             properties.clear();
-            cin.ignore();
+            
             cout << player_name << ": ";
             cout << "Do you want to upgrade your asset to "
                 << (properties_size + 1 == 1 ? "a house" : to_string(properties_size + 1) + " houses")
@@ -1405,6 +1413,37 @@ class Virtual_Monopoly_Board {
             }
             return false; 
         }
+
+        void bailingOutAssessment(int bailing_out_fee, int player){
+            if (bailing_out_fee <= asset -> getMoney() -> getCash(player)){
+                cout << "You are getting charged $" << bailing_out_fee << " for bailing you out" << endl;
+                asset -> getMoney() -> chargeIt(player, bailing_out_fee);
+            } else {
+                if (bailing_out_fee > asset -> netWorth(player)){
+                    cout << playerName[player] << " is bankrupt" << endl; 
+                    
+                    positionMap.erase(player);
+                    playerName.erase(player);
+                    asset -> getMoney() -> eraseMap(player);
+                    asset -> playerAssetElimination(player);
+
+                    group_size--; 
+                } else {
+                    string response; 
+                    cout << "Do you want us to automatically sell your asset or "
+                        << " manually sell your asset? (a or b): ";
+                    getline(cin, response);
+
+                    if (response == "a"){
+                        asset -> automaticSelling(bailing_out_fee, player, 0);
+                        cout << "You are getting charged $" << bailing_out_fee << " for bailing you out" << endl;
+                    } else {
+                        asset -> automaticSelling(bailing_out_fee, player, 0);
+                        cout << "You are getting charged $" << bailing_out_fee << " for bailing you out" << endl;
+                    }
+                }
+            }
+        }
         bool jailCondition(int player){
             int user_choice; 
 
@@ -1446,8 +1485,8 @@ class Virtual_Monopoly_Board {
 
             if (user_choice == 1){
                 if (first_dice == second_dice){
-                    cout << "You are getting charged $" << bailing_out_fee << " for bailing you out" << endl;
-                    asset -> getMoney() -> chargeIt(player, bailing_out_fee);
+                    
+                    bailingOutAssessment(bailing_out_fee, player);
                     cout << "Congratulations. You are out of the jail" << endl; 
                     jailCount[player] = 0; 
                     return true; 
@@ -1457,8 +1496,7 @@ class Virtual_Monopoly_Board {
                 }
             } else {
                 if (first_dice + second_dice > 7){
-                    cout << "You are getting charged $" << bailing_out_fee << " for bailing you out" << endl;
-                    asset -> getMoney() -> chargeIt(player, bailing_out_fee);
+                    bailingOutAssessment(bailing_out_fee, player);
                     cout << "Congratulations. You are out of the jail" << endl; 
                     jailCount[player] = 0;
                     return true;  
@@ -1537,32 +1575,11 @@ class Virtual_Monopoly_Board {
         }
 
         bool gameContinuousQualification(){
-            int total_bankrupted_players = 0; 
-
-            for (int player = 1; player <= group_size; player++){
-                Color* street = positionMap[player];
-                cout << street -> getStreetName() << ": street name" << endl; 
-                // if ((street =nullptr)){   
-                //     continue; 
-                // }
-                if (playerName[player].empty()){
-                    continue;
-                }
-                if(asset -> bankruptcy(street, player)){
-                    cout << street -> getRent() << ": rent value at " << street -> getStreetName() << endl; 
-                    total_bankrupted_players++; 
-                    positionMap.erase(player);
-                    playerName.erase(player);
-                    asset -> playerAssetElimination(player);
-                    group_size--; 
-                    if (group_size == 1){
-                        return false; 
-                    }  
-                }
-                
+            if (group_size == 1){
+                return false; 
             }
-            
             return true; 
+
         }
 
         Color* findStreetCharacterstics(const string& street_name){
@@ -1919,6 +1936,24 @@ public:
         Color* colorInTheMap(int player){
             return positionMap[player];
         }
+
+        bool bankruptcyAssesment(Color* street, int player){
+            if (playerName[player].empty()){
+                return true; 
+            }
+
+            if ((asset -> bankruptcy(street, player))){
+                cout << street -> getRent() << ": rent value at " << street -> getStreetName() << endl; 
+                positionMap.erase(player);
+                playerName.erase(player);
+                asset -> playerAssetElimination(player);
+
+                group_size--; 
+                return true; 
+            }
+
+            return false;
+        }
         void playerMove(int player){
             string player_decision; 
 
@@ -1927,6 +1962,7 @@ public:
                     << "Please press (1) if you are ready for throwing the dices or press (q) to quit the program: "; 
 
                 cin >> player_decision; 
+                cin.ignore();
                 try {
                     if (player_decision == "1"){
                         cout << "Your dices are throwing...." << endl; 
@@ -1958,14 +1994,17 @@ public:
                         asset -> buyAsset(street, player); 
                         asset -> printAsset();
                         
-                    } else { 
-                        if ((ownerVerification(street, player))){
-                            upgrade ->upgradeProperties(street, player);
+                    } else {
+                        if ((!bankruptcyAssesment(street, player))){
+                            if ((ownerVerification(street, player))){
+                                upgrade ->upgradeProperties(street, player);
+                            } else {
+                                asset -> sellAsset(street, player);
+                                asset -> printAsset();
+                            }
                         } else {
-                            asset -> sellAsset(street, player);
-                            asset -> printAsset();
+                            // No further statement for now.
                         }
-                   
                     }
                 }  else if (checkCommunitiesChest(player)){
                     // Nothing more needed in this funciton. 
@@ -1991,9 +2030,12 @@ public:
             string player_name; 
             cout << "Welcome to our Monopoly_Like Board Game!" << endl;
             cout << "Before we start, my name is Henry Tran, and I'll be your host for this game." << endl;
+            cout << endl; 
             while (true){
                 cout << "I would like to know how many people will be participating in this game. Please choose the number from 2 to 6: ";
                 cin >> player_choice; 
+                cin.ignore();
+                cout << endl; 
 
                 vector<int> number(5);
                 iota(number.begin(), number.end(), 2);
@@ -2020,13 +2062,14 @@ public:
             string player_decision; 
             for (int player = 1; player <= group_size; player++){
                 do {
-                    cin.ignore();
                     cout << "Player " << player << ": Please let us know your name: ";
                     getline(cin, player_name); 
-                    // cout << endl; 
+                    cout << endl; 
                     cout << "Is it the name you would like to use in the game: " << player_name << "? (y/n)";
                     cin >> player_decision; 
+                    cin.ignore();
                 } while (player_decision != "y");
+                cout << endl; 
                 playerName[player] = player_name; 
                 asset -> updatedNameMap(playerName); 
                 upgrade -> updatedNameMap(playerName);

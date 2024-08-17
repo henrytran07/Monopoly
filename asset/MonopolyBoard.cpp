@@ -14,6 +14,10 @@ void UserBoard::board_at_0_i_inputFile(vector<string>& board_at_0_i) {
     while (getline(inputFile, line)) {
         board_at_0_i.push_back(line);
     }
+
+    if (board_at_0_i.empty()){
+        cout <<"Empty vector (board_at_0_i). Needed to check the program..." << endl; 
+    }
     inputFile.close();
 }
 
@@ -26,6 +30,10 @@ void UserBoard::board_at_i_9_inputFile(vector<string>& board_at_i_9) {
     string line;
     while (getline(inputFile, line)) {
        board_at_i_9.push_back(line);
+    }
+
+    if (board_at_i_9.empty()){
+        cout << "Empty vector(board_at_i_9). Needed to check the program..." << endl; 
     }
     inputFile.close();
 }
@@ -40,6 +48,10 @@ void UserBoard::board_at_9_i_inputFile(vector<string>& board_at_9_i) {
     while (getline(inputFile, line)) {
         board_at_9_i.push_back(line);
     }
+
+    if (board_at_9_i.empty()){
+        cout << "Empty vector(board_at_9_i). Needed to check the program..." << endl; 
+    }
     inputFile.close();
 }
 
@@ -53,33 +65,63 @@ void UserBoard::board_at_i_0_inputFile(vector<string>& board_at_i_0) {
     while (getline(inputFile, line)) {
         board_at_i_0.push_back(line);
     }
+
+    if (board_at_i_0.empty()){
+        cout << "Empty vector (board_at_i_0). Needed to check the program..." << endl;
+    }
     inputFile.close();
 }
 
 vector<vector<string>> UserBoard::user_board() {
     vector<vector<string>> user_monopoly_board(ROW, vector<string>(COL, "")); // Initialize with "Empty"
-    vector<string> street(COL); // Temporary storage for reading data
+    vector<string> street; // Temporary storage for reading data
 
     board_at_0_i_inputFile(street);
+    if (street.empty()){
+        cout << "Empty vector named street. Needed to check the program..." << endl; 
+    }
     for (int col = 0; col < COL; col++) {
         user_monopoly_board[0][col] = street[col];
-        cout << user_monopoly_board[0][col] << " ";
+        if (user_monopoly_board[0][col].empty()){
+            cout << "Empty element " << "row: 0"  <<  ", col: " << col << endl; 
+        }
     }
-    cout << endl; 
 
+    street.clear();
     board_at_i_9_inputFile(street);
+
+    if (street.empty()){
+        cout << "Empty vector named street. Needed to check the program..." << endl; 
+    }
+
     for (int row = 0; row < ROW; row++) {
         user_monopoly_board[row][0] = street[row];
+        if (user_monopoly_board[row][0].empty()){
+            cout << "Empty element " << "row: " << row << ", col: 0" << endl; 
+        }
     }
 
+    street.clear();
     board_at_9_i_inputFile(street);
+
+    if (street.empty()){
+        cout << "Empty vector named street. Needed to check the program..." << endl; 
+    }
+
     for (int col = 0; col < COL; col++) {
         user_monopoly_board[6][col] = street[col];
+        if (user_monopoly_board[6][col].empty()){
+            cout << "Empty element " << "row: 6" << ", col: " << col << endl; 
+        }
     }
 
+    street.clear();
     board_at_i_0_inputFile(street);
     for (int row = 0; row < ROW; row++) {
         user_monopoly_board[row][6] = street[row];
+        if (user_monopoly_board[row][6].empty()){
+            cout << "Empty element " << "row: " << row << ", col: 6 " << endl;
+        }
     }
 
     return user_monopoly_board;
