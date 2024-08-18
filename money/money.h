@@ -4,7 +4,8 @@
 
 #include <iostream> 
 #include <map> 
-#include "asset.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/assetFile/asset.h"
+
 using namespace std; 
 class Asset; 
 class Money {

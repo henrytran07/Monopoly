@@ -1,12 +1,13 @@
 #ifndef ASSET_H
 #define ASSET_H
-#include "color_category.h"
-#include "money.h" 
-#include "virtual_monopoly_board.h"
 #include <iostream> 
 #include <algorithm> 
 #include <vector> 
 #include <tuple> 
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/money/money.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/color_category/color_category.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/virtual_monopoly_board/virtual_monopoly_board.h"
+
 using namespace std; 
 
 class Money;

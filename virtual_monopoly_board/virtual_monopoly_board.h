@@ -5,11 +5,11 @@
 #include <vector> 
 #include <random> 
 #include <numeric> 
-#include "money.h"
-#include "color_category.h"
-#include "asset.h"
-#include "MonopolyBoard.h"
-#include "CommunityChestCard.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/money/money.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/color_category/color_category.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/assetFile/asset.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/userboard/MonopolyBoard.h"
+#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/community_chest_card/CommunityChestCard.h"
 #include <tuple> 
 using namespace std; 
 
