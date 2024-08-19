@@ -33,8 +33,90 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
 ```
 4. **Encounter Issues?** : If you encounter any issues during the process, feel free to contact me. 
 
+
+## Compiling the program
+
+1. Navigate to Project's Directory: Go to the directory where your source files are located. 
+```
+    cd [your directory]
+```
+
+2. Build the program: Compile the program using 'make' 
+```
+    make 
+```
+
+3. Check Executable Files: Verify that the following files are present in the 'executable' directory. 
+    - CommunityChestCard.o
+    - MonopolyBoard.o
+    - sset.o
+    - color_category.o
+    - mainImplementation.o
+    - money.o
+    - virtual_monopoly_board.o
+
+```
+    ls executable
+```
+
+4. Link and Create Executable: Link the object files to create the executable. 
+
+```
+    g++ -Wall -std=c++11 -o executable/monopoly_game \
+    executable/CommunityChestCard.o \
+    executable/MonopolyBoard.o \
+    executable/asset.o \
+    executable/color_category.o \
+    executable/mainImplementation.o \
+    executable/money.o \
+    executable/virtual_monopoly_board.o
+
+    ./executable/monopoly_game
+```
+
+5. Run the program 
+
+```
+    ./executable/monopoly_game
+```
+
+
 ## Enjoy the Game 
 
 1. **Follow Instructions**: Follow the instructions displayed in the terminal 
 
 2. **Enjoy**: Enjoy the Game!
+
+## Directory Structure
+
+The Monopoly project directory contains the following files and folders:
+
+- **Monopoly/**
+  - `README.md`
+  - **src/**
+    - `CommunityChestCard.cpp`
+    - `MonopolyBoard.cpp`
+    - `asset.cpp`
+    - `color_category.cpp`
+    - `mainImplementation.cpp`
+    - `money.cpp`
+    - `virtual_monopoly_board.cpp`
+  - **include/**
+    - `CommunityChestCard.h`
+    - `MonopolyBoard.h`
+    - `asset.h`
+    - `color_category.h`
+    - `mainImplementation.h`
+    - `money.h`
+    - `virtual_monopoly_board.h`
+  - `Makefile`
+  - **executable/**
+    - `CommunityChestCard.o`
+    - `MonopolyBoard.o`
+    - `asset.o`
+    - `color_category.o`
+    - `mainImplementation.o`
+    - `money.o`
+    - `virtual_monopoly_board.o`
+
+

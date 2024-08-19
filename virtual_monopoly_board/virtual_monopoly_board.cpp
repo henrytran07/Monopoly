@@ -271,7 +271,7 @@ void Virtual_Monopoly_Board:: throwDiceForStep(int player){
     cout << "The first dice's value: " << first_dice << endl; 
     int second_dice = throwingDice();
     cout << "The second dice's value: " << second_dice << endl; 
-    
+
     int total_steps = first_dice + second_dice;
     cout << "The total steps in your turn is " << total_steps << endl; 
 
