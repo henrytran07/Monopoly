@@ -321,7 +321,7 @@ void Virtual_Monopoly_Board:: guideline(){
     vector<string> stringGuideLine; 
     
     ifstream inputFile; 
-    inputFile.open("guidelines.txt");
+    inputFile.open("virtual_monopoly_board/guidelines.txt");
 
     if ((!inputFile.is_open())){
         cerr << "No file found: guidelines.txt" << endl; 

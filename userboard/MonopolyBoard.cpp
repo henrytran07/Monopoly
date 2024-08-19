@@ -5,7 +5,7 @@
 using namespace std;
 
 void UserBoard::board_at_0_i_inputFile(vector<string>& board_at_0_i) {
-    ifstream inputFile("board_at_0_i.txt");
+    ifstream inputFile("userboard/board_at_0_i.txt");
     if (!inputFile.is_open()) {
         cerr << "No file found: board_at_0_i.txt" << endl;
         return;
@@ -22,7 +22,7 @@ void UserBoard::board_at_0_i_inputFile(vector<string>& board_at_0_i) {
 }
 
 void UserBoard::board_at_i_9_inputFile(vector<string>& board_at_i_9) {
-    ifstream inputFile("board_at_i_9.txt");
+    ifstream inputFile("userboard/board_at_i_9.txt");
     if (!inputFile.is_open()) {
         cerr << "No file found: board_at_i_9.txt" << endl;
         return;
@@ -39,7 +39,7 @@ void UserBoard::board_at_i_9_inputFile(vector<string>& board_at_i_9) {
 }
 
 void UserBoard::board_at_9_i_inputFile(vector<string>& board_at_9_i) {
-    ifstream inputFile("board_at_9_i.txt");
+    ifstream inputFile("userboard/board_at_9_i.txt");
     if (!inputFile.is_open()) {
         cerr << "No file found: board_at_9_i.txt" << endl;
         return;
@@ -56,7 +56,7 @@ void UserBoard::board_at_9_i_inputFile(vector<string>& board_at_9_i) {
 }
 
 void UserBoard::board_at_i_0_inputFile(vector<string>& board_at_i_0) {
-    ifstream inputFile("board_at_i_0.txt");
+    ifstream inputFile("userboard/board_at_i_0.txt");
     if (!inputFile.is_open()) {
         cerr << "No file found: board_at_i_0.txt" << endl;
         return;

@@ -5,7 +5,7 @@ using namespace std;
 
 void CommunityChestCard:: cardInputFile(){
     ifstream inputFile; 
-    inputFile.open("community_chest_card.txt");
+    inputFile.open("community_chest_card/community_chest_card.txt");
 
     if ((!inputFile.is_open())){
         cerr << "No file found: community_chest_card.txt" << endl; 

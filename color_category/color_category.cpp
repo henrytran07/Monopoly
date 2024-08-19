@@ -194,9 +194,9 @@ vector<Color*>Color:: DARK_BLUE() {
 }
 void Color:: inputFile(){
     ifstream inputFile; 
-    inputFile.open("cities_names.txt");
+    inputFile.open("color_category/cities_names.txt");
     if (!inputFile.is_open()){
-        cerr << "No file found" << endl; 
+        cerr << "No file found: cities_names.txt" << endl; 
         exit(1);
     }
     string line; 
