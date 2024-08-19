@@ -49,7 +49,7 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
 3. Check Executable Files: Verify that the following files are present in the 'executable' directory. 
     - CommunityChestCard.o
     - MonopolyBoard.o
-    - sset.o
+    - asset.o
     - color_category.o
     - mainImplementation.o
     - money.o
