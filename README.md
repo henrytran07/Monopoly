@@ -36,17 +36,17 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
 
 ## Compiling the program
 
-1. Navigate to Project's Directory: Go to the directory where your source files are located. 
+1. **Navigate to Project's Directory**: Go to the directory where your source files are located. 
 ```
     cd [your directory]
 ```
 
-2. Build the program: Compile the program using 'make' 
+2. **Build the program**: Compile the program using 'make' 
 ```
     make 
 ```
 
-3. Check Executable Files: Verify that the following files are present in the 'executable' directory. 
+3. **Check Executable Files**: Verify that the following files are present in the 'executable' directory. 
     - CommunityChestCard.o
     - MonopolyBoard.o
     - asset.o
@@ -59,7 +59,7 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
     ls executable
 ```
 
-4. Link and Create Executable: Link the object files to create the executable. 
+4. **Link and Create Executable**: Link the object files to create the executable. 
 
 ```
     g++ -Wall -std=c++11 -o executable/monopoly_game \
@@ -71,10 +71,9 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
     executable/money.o \
     executable/virtual_monopoly_board.o
 
-    ./executable/monopoly_game
 ```
 
-5. Run the program 
+5. **Run the program** 
 
 ```
     ./executable/monopoly_game
