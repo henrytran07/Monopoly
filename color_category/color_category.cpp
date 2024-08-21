@@ -4,7 +4,7 @@
 #include <fstream> 
 #include <tuple>
 #include <string>
-#include "color_category.h"
+#include "../color_category/color_category.h"
 
 using namespace std;
 

@@ -5,12 +5,13 @@
 #include <vector> 
 #include <random> 
 #include <numeric> 
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/money/money.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/color_category/color_category.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/assetFile/asset.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/userboard/MonopolyBoard.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/community_chest_card/CommunityChestCard.h"
 #include <tuple> 
+#include "../money/money.h"
+#include "../color_category/color_category.h"
+#include "../assetFile/asset.h"
+#include "..//userboard/MonopolyBoard.h"
+#include "../community_chest_card/CommunityChestCard.h"
+
 using namespace std; 
 
 class Money; 

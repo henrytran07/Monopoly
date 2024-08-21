@@ -1,7 +1,7 @@
 #include <iostream> 
 #include <map> 
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/money/money.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/assetFile/asset.h"
+#include "../money/money.h"
+#include "../assetFile/asset.h"
 using namespace std; 
 
 

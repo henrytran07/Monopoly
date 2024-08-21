@@ -1,4 +1,4 @@
-#include "CommunityChestCard.h"
+#include "../community_chest_card/CommunityChestCard.h"
 #include <iostream> 
 
 using namespace std; 

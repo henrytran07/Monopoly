@@ -1,6 +1,8 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++11 -Iinclude
+
+CXXFLAGS = -Wall -std=c++11 -I../Monopoly/money -I../Monopoly/assetFile -I../Monopoly/color_category -I../Monopoly/community_chest_card -I../Monopoly/userboard -I../Monopoly/virtual_monopoly_board
+
 
 # Directories
 ASSETFILE_DIR = assetFile

@@ -1,10 +1,10 @@
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/money/money.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/assetFile/asset.h"
-#include "/Users/tranhuuloc/Documents/DSA_CODE/Monopoly/virtual_monopoly_board/virtual_monopoly_board.h"
 #include <iostream> 
 #include <algorithm> 
 #include <vector> 
 #include <tuple> 
+#include "../money/money.h"
+#include "../assetFile/asset.h"
+#include "../virtual_monopoly_board/virtual_monopoly_board.h"
 using namespace std; 
 
 Properties:: Properties(string nm, int val, int r, int cost): Color(nm, val, r, cost){}
