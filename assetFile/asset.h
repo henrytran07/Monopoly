@@ -68,7 +68,7 @@ class Asset {
 
         int calculatingPlayerNetWorth(int player);
         void buyAsset(Color* color, int player);
-
+    
         bool bankruptcy(Color* color, int player);
         void automaticSelling(int rent, int player, int owner);
         void manualSelling(int rent, int player, int owner, const string& first_condition, const string& second_condition);

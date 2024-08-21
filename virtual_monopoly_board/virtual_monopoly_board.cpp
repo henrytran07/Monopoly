@@ -811,10 +811,11 @@ void Virtual_Monopoly_Board:: gameRegistration(){
 
         vector<int> number(5);
         iota(number.begin(), number.end(), 2);
+
         bool player_selection = false; 
 
         try {
-            for (int num = 2; num < number.size(); num++){
+            for (int num : number){
                 if (player_choice == to_string(num)){
                     cout << "In ready... " << endl; 
 
@@ -866,6 +867,14 @@ void Virtual_Monopoly_Board:: gameStart(){
             playerMove(player);
             printPlayerCash();
         }
+    }
+
+    for (const auto& itr : playerName){
+        if (playerName[itr.first].empty()){
+            continue; 
+        }
+
+        cout << itr.second << " is the winner. " << endl; 
     }
 }
 

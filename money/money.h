@@ -11,7 +11,6 @@ class Asset;
 class Money {
     private:  
         Asset* asset;   
-        int player; 
         static double tax_rate;
         map<int, int> cash;
         map<int, string> playerName;
@@ -25,8 +24,8 @@ class Money {
         };
 
         void updatedNameMap(map<int, string>& name);
-
         int getCash(int player) {return cash.at(player);}  
+        void printMoneyMap();
         void chargeIt(int player, int cost);
         void sellIt(int player, int value); 
         // double payTax(int player);

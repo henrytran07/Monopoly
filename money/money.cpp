@@ -4,14 +4,17 @@
 #include "../assetFile/asset.h"
 using namespace std; 
 
-
 void Money:: updatedNameMap(map<int, string> &name){
     playerName = name; 
 }
 
 void Money::cashDeclaration(){
-    for (int i = 1; i <= 4; i++){
-        cash[i] = 1500; 
+    for (int player = 1; player <= 6; player++){
+        cash[player] = 1500; 
+    }
+
+    if (cash.empty()){
+        cout << "Empty cash map" << endl; 
     }
 }
 
@@ -45,6 +48,12 @@ void Money:: passGo(int player){
     sellIt(player, 200);
 }
 
+void Money:: printMoneyMap(){
+    for (auto itr : cash){
+        cout << "Player " << playerName[itr.first] << ": ";
+            cout << itr.second << endl;  
+    }
+}
 void Money:: eraseMap(int player){
     cash.erase(player);
 }

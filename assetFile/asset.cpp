@@ -74,7 +74,7 @@ bool Asset::streetLookUp(Color* street){
         return false; 
     };
 
-    for (int play = 1; play <= 4; play++){
+    for (int play = 1; play <= 6; play++){
         if (checkStreetPresence(play)){
             return false; 
         }
@@ -85,7 +85,7 @@ bool Asset::streetLookUp(Color* street){
 int Asset:: findOwner(Color* street){
     if (street == nullptr) return -1; 
 
-    for (int play = 1; play <= 4; play++){
+    for (int play = 1; play <= 6; play++){
         auto map = asset.find(play);
         if (map != asset.end()){
             auto it = map -> second; 
@@ -146,7 +146,6 @@ void Asset:: buyAsset(Color* street, int player) {
     
     cout << street_name << " is estimated at $" << value << endl; 
     if ((!ownerVerification(street, player)) && (streetLookUp(street))){
-        
         if (money -> getCash(player) >= value){
             cout << name << ": Do you want to acquire this asset on "
                 << street_name<< " street having the value of $"

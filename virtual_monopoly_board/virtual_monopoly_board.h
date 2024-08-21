@@ -107,9 +107,9 @@ class Virtual_Monopoly_Board{
         void printPlayerCash(); 
     public: 
         Virtual_Monopoly_Board();
-        
         ~Virtual_Monopoly_Board();
         void positionInitialization();
+        int getGroupSize() {return group_size;}
         string getPlayerName(int player) {return playerName[player];}
         Color* colorInTheMap(int player){ return positionMap[player];}
         void printColorMap();
