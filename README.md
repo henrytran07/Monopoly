@@ -79,6 +79,11 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
     ./executable/monopoly_game
 ```
 
+6. **Removing the compiled files and cleaning up the build environment**
+
+```
+    make clean
+```
 
 ## Enjoy the Game 
 
