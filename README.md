@@ -31,7 +31,9 @@ Players can buy properties, upgrade them by building houses and hotels, and enga
 ```
     git clone https://github.com/henrytran07/Monopoly.git
 ```
-4. **Encounter Issues?** : If you encounter any issues during the process, feel free to contact me via [my Linkedln] (https://www.linkedin.com/in/henry-tran-8b6025314).
+4. **Encounter Issues?** : ## Encounter Issues?
+
+If you encounter any issues during the process, feel free to contact me via [my LinkedIn](https://www.linkedin.com/in/henry-tran-8b6025314).
 
 
 ## Compiling the program
