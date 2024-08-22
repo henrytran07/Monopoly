@@ -8,11 +8,15 @@ void Money:: updatedNameMap(map<int, string> &name){
     playerName = name; 
 }
 
+void Money:: updatedGroupSize(int& size){
+    group_size = size; 
+}
+
 void Money::cashDeclaration(){
-    for (int player = 1; player <= 6; player++){
+    for (int player = 1; player <= group_size; player++){
         cash[player] = 1500; 
     }
-
+    
     if (cash.empty()){
         cout << "Empty cash map" << endl; 
     }

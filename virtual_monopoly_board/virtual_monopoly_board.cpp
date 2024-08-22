@@ -17,13 +17,14 @@ Virtual_Monopoly_Board::Virtual_Monopoly_Board(): gen(rd()){
 
         money = asset -> getMoney();
         color = asset -> getColor();
-
         city_name = color -> city_names();
         
         myAsset = asset -> getAsset();
         myMap = color -> colorMap();
 
         gameRegistration();
+        money -> updatedGroupSize(group_size);
+        money -> cashDeclaration();
         positionInitialization();
     } catch(const bad_alloc& e){
         cerr << "Memory allocation failed " << e.what() << endl; 
@@ -856,6 +857,7 @@ void Virtual_Monopoly_Board:: gameRegistration(){
                     cout << "In ready... " << endl; 
 
                     group_size = stoi(player_choice);
+                    money -> updatedGroupSize(group_size);
                     player_selection = true; 
                     break; 
                 }
@@ -898,10 +900,16 @@ void Virtual_Monopoly_Board:: printPlayerCash() {
 }
 void Virtual_Monopoly_Board:: gameStart(){
 
+    for (const auto& itr : playerName){
+        cout << playerName[itr.first] << " is initialized $" << asset -> getMoney() -> getCash(itr.first) << endl; 
+        cout << endl; 
+    }
+    cout << endl; 
+
     while (gameContinuousQualification()){
-        for (int player = 1; player <= group_size; player++){
+        for (const auto& itr: playerName){
             userboard.printBoard();
-            playerMove(player);
+            playerMove(itr.first);
             printPlayerCash();
         }
     }

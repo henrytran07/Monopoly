@@ -14,7 +14,8 @@ class Money {
         static double tax_rate;
         map<int, int> cash;
         map<int, string> playerName;
-        void cashDeclaration();
+        int group_size = 1; 
+        
     public: 
         Money(){
             cashDeclaration(); 
@@ -24,10 +25,12 @@ class Money {
         };
 
         void updatedNameMap(map<int, string>& name);
+        void cashDeclaration();
         int getCash(int player) {return cash.at(player);}  
         void printMoneyMap();
         void chargeIt(int player, int cost);
         void sellIt(int player, int value); 
+        void updatedGroupSize(int& size);
         // double payTax(int player);
         void passGo(int player);
         void eraseMap(int player);
