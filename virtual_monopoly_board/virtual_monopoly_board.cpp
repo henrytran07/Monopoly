@@ -209,10 +209,10 @@ bool Virtual_Monopoly_Board:: jailCondition(int player){
         return true; 
     }
 
-    if (firstTimeInJail(player)){
-        cout << "Wail till next draw " << endl; 
-        return false; 
-    }
+    // if (firstTimeInJail(player)){
+    //     cout << "Wail till next draw " << endl; 
+    //     return false; 
+    // }
 
     string user_choice; 
     string first_condition = "1";
@@ -221,7 +221,7 @@ bool Virtual_Monopoly_Board:: jailCondition(int player){
         cout << playerName[player] << ": "
             << " You are in jail now. You have two options: "
             << "(1) Rolling Double or (2) Rolling two dices having value greater than 7."
-            << ". Please choose (1) or (2)";
+            << ". Please choose (1) or (2): ";
             getline(cin, user_choice);
             asset -> userHandleResponse(user_choice, first_condition, second_condition);
             cout << endl; 
@@ -233,6 +233,9 @@ bool Virtual_Monopoly_Board:: jailCondition(int player){
 
     int second_dice = throwingDice();
     cout << "The second dice's value: " << second_dice << endl; 
+
+    int sum_of_first_and_second = first_dice + second_dice; ;
+    cout << "The total dice value  you are throwing is " << sum_of_first_and_second << endl; 
 
     if (user_choice == "1"){
         if (first_dice == second_dice){
@@ -260,11 +263,11 @@ bool Virtual_Monopoly_Board:: jailCondition(int player){
         } else {
             cout << "Good luck in the next draw. " << endl; 
             cout << endl; 
-            return true; 
+            return false; 
         }
     }
 
-    return true; 
+    return false; 
 }
 void Virtual_Monopoly_Board:: throwDiceForStep(int player){
     cout << "Dices are throwing..." << endl; 
@@ -723,6 +726,12 @@ bool Virtual_Monopoly_Board:: bankruptcyAssessment(Color* street, int player){
         asset -> playerAssetElimination(player);
 
         group_size --; 
+        if ((!gameContinuousQualification())){
+            for (const auto &itr : playerName){
+                cout << playerName[itr.first] << ": is the winner of this round." << endl; 
+            }
+            exit(1);
+        }
         return true; 
     }
 
@@ -755,11 +764,14 @@ void Virtual_Monopoly_Board:: playerMove(int player){
     cout << endl; 
 
     if (jailCheck(player)){
-        if (jailCondition(player)){
+        if ((jailCondition(player))){
             throwDiceForStep(player);
         } else {
-            cout << playerName[player] << ": You are in jail..." << endl; 
-
+            if (playerName[player] == ""){
+                // No additional comment for now
+            } else {
+                cout << playerName[player] << ": You are in jail..." << endl; 
+            }
         }
     } else {
         throwDiceForStep(player);
