@@ -70,6 +70,8 @@ bool Asset::streetLookUp(Color* street){
             if (it != properties.end()){
                 return true; 
             }
+        } else {
+            /// Undecided yet
         }
         return false; 
     };
@@ -94,6 +96,8 @@ int Asset:: findOwner(Color* street){
             if (itt != it.end()){
                 return play;
             }
+        } else {
+            continue; 
         }
     }
     return -1; 
