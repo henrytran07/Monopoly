@@ -107,7 +107,7 @@ The Monopoly project directory contains the following files and folders:
     - `mainImplementation.cpp`
     - `money.cpp`
     - `virtual_monopoly_board.cpp`
-  - **include/**
+  - **Headers/**
     - `CommunityChestCard.h`
     - `MonopolyBoard.h`
     - `asset.h`
