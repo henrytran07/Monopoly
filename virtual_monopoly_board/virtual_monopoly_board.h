@@ -102,6 +102,8 @@ class Virtual_Monopoly_Board{
         bool checkFreeParking(int player);
         bool bankruptcyAssessment(Color* street, int player);
         void playerMove(int player);
+
+        void checkSimilarName(string& name);
         void gameRegistration();
 
         void printPlayerCash(); 

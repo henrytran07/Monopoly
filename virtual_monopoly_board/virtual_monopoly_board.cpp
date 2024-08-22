@@ -791,6 +791,42 @@ void Virtual_Monopoly_Board:: playerMove(int player){
     }
 }
 
+void Virtual_Monopoly_Board:: checkSimilarName(string& name){
+    bool similar_name = false;
+    string player_name = name;
+
+    do {
+        if (similar_name){
+            cout << "Please enter another name that your would like to use in this game: ";
+            getline(cin, player_name);
+
+            if (player_name != name){
+                similar_name = false;
+                name = player_name;
+                break;
+            }
+        }
+
+        try{
+            for (const auto& itr : playerName){
+                cout << player_name << ": player_name" << endl;
+                if (player_name == itr.second){
+                    similar_name = true;
+                }
+            }
+
+            if (similar_name){
+                throw invalid_argument("Similar name with the other player");
+            }
+        
+        } catch(const invalid_argument& e){
+            cout << "Invalid input: " << e.what() << endl;
+        }
+
+    } while(similar_name);
+    
+}
+
 void Virtual_Monopoly_Board:: gameRegistration(){
     guideline();
     cout << endl; 
@@ -839,6 +875,7 @@ void Virtual_Monopoly_Board:: gameRegistration(){
         do {
             cout << "Player " << player << ": Please let us know your name: ";
             getline(cin, player_name);
+            checkSimilarName(player_name);
 
             cout << "Is it the name you would like to use in the game? (y/n): " << player_name << ": ";
             getline(cin, player_decision);
