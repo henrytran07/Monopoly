@@ -169,11 +169,22 @@ bool Virtual_Monopoly_Board:: bailingOutAssessment(int bailing_out_fee, int play
 
             positionMap.erase(player);
             playerName.erase(player);
-
             asset -> getMoney() -> eraseMap(player);
             asset -> playerAssetElimination(player);
 
             group_size--; 
+            cout << group_size << ": group_size" << endl; 
+
+            if ((!gameContinuousQualification())){
+                for (const auto itr : playerName){
+                    if (itr.second.empty()){
+                        continue;
+                    }
+
+                    cout << itr.second << " is the winner of this round. " << endl; 
+                    exit(0);
+                }
+            }
             return false; 
         } else {
             string response; 
@@ -255,10 +266,12 @@ bool Virtual_Monopoly_Board:: jailCondition(int player){
     } else {
         if (first_dice + second_dice > 7){
             if (bailingOutAssessment(bailing_out_fee, player)){
-                cout << "Congraulations. " << playerName[player] << " is out of jail now" << endl; 
+            cout << "Congratulations. " << playerName[player] << " is out of jail now" << endl; 
                 jailCount[player] = 0; 
                 cout << endl; 
                 return true; 
+            } else {
+                // Already resolved in the function
             }
         } else {
             cout << "Good luck in the next draw. " << endl; 
@@ -349,6 +362,7 @@ void Virtual_Monopoly_Board:: guideline(){
 }
 
 bool Virtual_Monopoly_Board:: gameContinuousQualification(){
+
     if (group_size == 1){
         return false; 
     }
@@ -721,17 +735,22 @@ bool Virtual_Monopoly_Board:: bankruptcyAssessment(Color* street, int player){
     if ((asset -> bankruptcy(street, player))){
         cout << street -> getRent() << ": rent value at "
             << street -> getStreetName() << endl; 
-        positionMap[player];
+
+        positionMap.erase(player);
         playerName.erase(player);
         asset -> playerAssetElimination(player);
+        money -> eraseMap(player);
 
         group_size --; 
+
         if ((!gameContinuousQualification())){
             for (const auto &itr : playerName){
                 cout << playerName[itr.first] << ": is the winner of this round." << endl; 
             }
-            exit(1);
+
+            exit(0);
         }
+
         return true; 
     }
 
@@ -907,6 +926,9 @@ void Virtual_Monopoly_Board:: gameRegistration(){
 
 void Virtual_Monopoly_Board:: printPlayerCash() {
     for (int player = 1; player <= group_size; player++){
+        if (playerName[player].empty()){
+            continue;
+        }
         cout << playerName[player] << "'s cash: $" << asset -> getMoney() -> getCash(player) << endl; 
     }
 }

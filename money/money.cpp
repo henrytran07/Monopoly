@@ -22,6 +22,24 @@ void Money::cashDeclaration(){
     }
 }
 
+int Money::getCash(int player) {
+    for (const auto& itr : cash) {
+        int order_of_the_player = itr.first;
+        
+        if (playerName[order_of_the_player].empty()) {
+            continue;
+        }
+
+        if (order_of_the_player == player) {
+            return itr.second;
+        }
+    }
+
+    // Player not found
+    return -1;
+}
+
+
 void Money:: chargeIt(int player, int cost){
     cout << playerName[player] << " is getting charged $" << cost << "..." << endl;
     cash[player] -= cost; 
@@ -60,4 +78,5 @@ void Money:: printMoneyMap(){
 }
 void Money:: eraseMap(int player){
     cash.erase(player);
+    playerName.erase(player);
 }

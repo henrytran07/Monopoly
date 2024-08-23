@@ -228,8 +228,6 @@ bool Asset::bankruptcy(Color* color, int player){
     if (findOwner(color) != -1){
         if (total_asset < color -> getRent()){
             cout << player_name << " is bankrupt..." << endl; 
-            playerName.erase(player);
-
             return true;  
         } else {
             return false; 
@@ -428,7 +426,7 @@ void Asset:: playerAssetElimination(int player){
             innerMap.erase(itr);
         }
     }   
-    
+    playerName.erase(player);
     // upgrade -> mapChange(asset);
     if (outterMap != asset.end()){
         cout << "Map is deleting improperly..." << endl; 

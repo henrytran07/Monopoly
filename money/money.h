@@ -26,7 +26,7 @@ class Money {
 
         void updatedNameMap(map<int, string>& name);
         void cashDeclaration();
-        int getCash(int player) {return cash.at(player);}  
+        int getCash(int player);  
         void printMoneyMap();
         void chargeIt(int player, int cost);
         void sellIt(int player, int value); 
