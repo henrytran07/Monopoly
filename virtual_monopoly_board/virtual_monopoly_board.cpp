@@ -176,7 +176,7 @@ bool Virtual_Monopoly_Board:: bailingOutAssessment(int bailing_out_fee, int play
             cout << group_size << ": group_size" << endl; 
 
             if ((!gameContinuousQualification())){
-                for (const auto itr : playerName){
+                for (const auto &itr : playerName){
                     if (itr.second.empty()){
                         continue;
                     }
@@ -831,17 +831,19 @@ void Virtual_Monopoly_Board:: checkSimilarName(string& name){
         if (similar_name){
             cout << "Please enter another name that your would like to use in this game: ";
             getline(cin, player_name);
-
-            if (player_name != name){
-                similar_name = false;
-                name = player_name;
-                break;
+            
+            for (const auto& itr : playerName){
+                if ((player_name != name) && (player_name != itr.second)){
+                    similar_name = false;
+                    name = player_name;
+                    break;
+                }
             }
+      
         }
 
         try{
             for (const auto& itr : playerName){
-                cout << player_name << ": player_name" << endl;
                 if (player_name == itr.second){
                     similar_name = true;
                 }
@@ -906,12 +908,14 @@ void Virtual_Monopoly_Board:: gameRegistration(){
 
     for (int player = 1; player <= group_size; player++){
         do {
+
             cout << "Player " << player << ": Please let us know your name: ";
             getline(cin, player_name);
             checkSimilarName(player_name);
 
             cout << "Is it the name you would like to use in the game? (y/n): " << player_name << ": ";
             getline(cin, player_decision);
+
         }  while (player_decision != "y");
         cout << endl; 
 

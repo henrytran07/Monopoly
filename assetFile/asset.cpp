@@ -112,10 +112,10 @@ map<vector<Color*>, map<string, tuple<int, int, int>>> Asset:: getMyMap(){
 }
 
 void Asset:: printAsset() {
-    for (const auto player : asset){
+    for (const auto &player : asset){
         cout << playerName[player.first]<< ": " ; 
         // cout << "Player " << player.first << ": ";
-        for (const auto city : player.second){
+        for (const auto &city : player.second){
             cout << "The city name: " << city.first -> getStreetName() << endl; 
             cout << "  Properties'size: " << city.second.size() << endl; 
         }
